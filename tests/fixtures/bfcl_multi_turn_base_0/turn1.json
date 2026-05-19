@@ -1,0 +1,24 @@
+{
+  "scenario": "bfcl_multi_turn_base_0",
+  "turn": 1,
+  "iota": "Create directory 'archive' under workspace and move report.txt into it.",
+  "gamma": {},
+  "tools_registry": {
+    "cd": {
+      "description": "Tool cd",
+      "params": ["folder"]
+    },
+    "mkdir": {
+      "description": "Tool mkdir",
+      "params": ["dir_name"]
+    },
+    "mv": {
+      "description": "Tool mv",
+      "params": ["source", "destination"]
+    }
+  },
+  "expected_from_md": {
+    "ordered_tool_names": ["cd", "mkdir", "mv"],
+    "note": "Reference only; DECOMPOSE output is not scored by verify_decompose."
+  }
+}

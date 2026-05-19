@@ -1,0 +1,20 @@
+{
+  "scenario": "bfcl_multi_turn_base_0",
+  "turn": 2,
+  "iota": "Change to folder 'archive' and search report.txt for the word 'revenue'.",
+  "gamma": {},
+  "tools_registry": {
+    "cd": {
+      "description": "Tool cd",
+      "params": ["folder"]
+    },
+    "grep": {
+      "description": "Tool grep",
+      "params": ["file_name", "pattern"]
+    }
+  },
+  "expected_from_md": {
+    "ordered_tool_names": ["cd", "grep"],
+    "note": "Reference only; DECOMPOSE output is not scored by verify_decompose."
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "description": "Symbolic remediation hook returns t′ when prerequisite is absent.",
+  "id": "smoke_remediation",
+  "task": {
+    "id": "run",
+    "text": "Fetch remote data",
+    "depends_on": [],
+    "tool_name": "http_get"
+  },
+  "prereq_keys": ["session_cookie"],
+  "scratchpad": {},
+  "mode": "remediation",
+  "check_trace": false,
+  "remediation": {
+    "when_key": "session_cookie",
+    "when_outcome": "absent",
+    "task": {
+      "id": "login",
+      "text": "Obtain session",
+      "depends_on": [],
+      "tool_name": "auth_login"
+    }
+  },
+  "expected": {
+    "status": "absent",
+    "key": "session_cookie",
+    "remediation_task_id": "login"
+  }
+}

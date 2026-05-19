@@ -1,0 +1,506 @@
+{
+  "version": 1,
+  "description": "DECOMPOSE benchmark: score OpenRouter decompositions vs expected tool order.",
+  "cases": [
+    {
+      "id": "01_archive_mv",
+      "title": "Archive folder and move file",
+      "iota": "Create directory 'archive' under workspace and move report.txt into it.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "mkdir": {
+          "description": "Tool mkdir",
+          "params": [
+            "dir_name"
+          ]
+        },
+        "mv": {
+          "description": "Tool mv",
+          "params": [
+            "source",
+            "destination"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "mkdir",
+          "mv"
+        ],
+        "task_count": 3
+      }
+    },
+    {
+      "id": "02_grep_revenue",
+      "title": "Cd then grep",
+      "iota": "Change to folder 'archive' and search report.txt for the word 'revenue'.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "grep": {
+          "description": "Tool grep",
+          "params": [
+            "file_name",
+            "pattern"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "grep"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "03_mkdir_only",
+      "title": "Single mkdir",
+      "iota": "Create a top-level directory named 'logs'.",
+      "gamma": {},
+      "tools_registry": {
+        "mkdir": {
+          "description": "Tool mkdir",
+          "params": [
+            "dir_name"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "mkdir"
+        ],
+        "task_count": 1
+      }
+    },
+    {
+      "id": "04_cd_cat",
+      "title": "Read file after cd",
+      "iota": "Go to workspace and print config.yaml contents.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "cat": {
+          "description": "Tool cat",
+          "params": [
+            "file_path"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "cat"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "05_cd_cp",
+      "title": "Copy file",
+      "iota": "In workspace, copy notes.txt to notes.bak.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "cp": {
+          "description": "Tool cp",
+          "params": [
+            "src",
+            "dest"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "cp"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "06_cd_rm",
+      "title": "Remove file",
+      "iota": "From workspace, delete tmp.dat.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "rm": {
+          "description": "Tool rm",
+          "params": [
+            "path"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "rm"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "07_cd_touch",
+      "title": "Create empty file",
+      "iota": "In workspace, create an empty file named done.flag.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "touch": {
+          "description": "Tool touch",
+          "params": [
+            "path"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "touch"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "08_login_post",
+      "title": "Auth then post",
+      "iota": "Log in to the app, then publish status 'deployed'.",
+      "gamma": {},
+      "tools_registry": {
+        "login": {
+          "description": "Tool login",
+          "params": [
+            "user",
+            "token"
+          ]
+        },
+        "post_status": {
+          "description": "Tool post_status",
+          "params": [
+            "text"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "login",
+          "post_status"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "09_fetch_parse",
+      "title": "Fetch then parse",
+      "iota": "Download URL https://example.com/data.json then parse JSON.",
+      "gamma": {},
+      "tools_registry": {
+        "fetch_url": {
+          "description": "Tool fetch_url",
+          "params": [
+            "url"
+          ]
+        },
+        "parse_json": {
+          "description": "Tool parse_json",
+          "params": [
+            "blob"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "fetch_url",
+          "parse_json"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "10_save_sync",
+      "title": "Save then sync",
+      "iota": "Save document id 7 then sync to cloud bucket 'backup'.",
+      "gamma": {},
+      "tools_registry": {
+        "save_doc": {
+          "description": "Tool save_doc",
+          "params": [
+            "doc_id"
+          ]
+        },
+        "sync_cloud": {
+          "description": "Tool sync_cloud",
+          "params": [
+            "bucket"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "save_doc",
+          "sync_cloud"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "11_validate_submit",
+      "title": "Validate then submit",
+      "iota": "Validate order form f-12 then submit it.",
+      "gamma": {},
+      "tools_registry": {
+        "validate_form": {
+          "description": "Tool validate_form",
+          "params": [
+            "form_id"
+          ]
+        },
+        "submit_form": {
+          "description": "Tool submit_form",
+          "params": [
+            "form_id"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "validate_form",
+          "submit_form"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "12_build_search",
+      "title": "Index then search",
+      "iota": "Build search index for corpus 'docs' then query 'deadline'.",
+      "gamma": {},
+      "tools_registry": {
+        "build_index": {
+          "description": "Tool build_index",
+          "params": [
+            "corpus"
+          ]
+        },
+        "search_index": {
+          "description": "Tool search_index",
+          "params": [
+            "query"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "build_index",
+          "search_index"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "13_compress_upload",
+      "title": "Compress then upload",
+      "iota": "Compress folder release/ then upload archive to s3 key 'out.zip'.",
+      "gamma": {},
+      "tools_registry": {
+        "compress": {
+          "description": "Tool compress",
+          "params": [
+            "path"
+          ]
+        },
+        "upload_s3": {
+          "description": "Tool upload_s3",
+          "params": [
+            "key"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "compress",
+          "upload_s3"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "14_cd_mkdir_cp",
+      "title": "Prepare dir and copy in",
+      "iota": "Enter workspace, create 'staging', copy build.bin into staging.",
+      "gamma": {},
+      "tools_registry": {
+        "cd": {
+          "description": "Tool cd",
+          "params": [
+            "folder"
+          ]
+        },
+        "mkdir": {
+          "description": "Tool mkdir",
+          "params": [
+            "dir_name"
+          ]
+        },
+        "cp": {
+          "description": "Tool cp",
+          "params": [
+            "src",
+            "dest"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "cd",
+          "mkdir",
+          "cp"
+        ],
+        "task_count": 3
+      }
+    },
+    {
+      "id": "15_connect_query",
+      "title": "DB connect and query",
+      "iota": "Connect to database 'analytics' and run SQL 'SELECT 1'.",
+      "gamma": {},
+      "tools_registry": {
+        "connect_db": {
+          "description": "Tool connect_db",
+          "params": [
+            "name"
+          ]
+        },
+        "run_sql": {
+          "description": "Tool run_sql",
+          "params": [
+            "sql"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "connect_db",
+          "run_sql"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "16_encrypt_send",
+      "title": "Encrypt then send",
+      "iota": "Encrypt message 'hi' with key k9 then send to queue 'jobs'.",
+      "gamma": {},
+      "tools_registry": {
+        "encrypt": {
+          "description": "Tool encrypt",
+          "params": [
+            "message",
+            "key"
+          ]
+        },
+        "send_queue": {
+          "description": "Tool send_queue",
+          "params": [
+            "queue_name"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "encrypt",
+          "send_queue"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "17_ticket_notify",
+      "title": "Ticket then notify",
+      "iota": "Create ticket 'bug-1' then notify channel 'ops'.",
+      "gamma": {},
+      "tools_registry": {
+        "create_ticket": {
+          "description": "Tool create_ticket",
+          "params": [
+            "title"
+          ]
+        },
+        "notify_channel": {
+          "description": "Tool notify_channel",
+          "params": [
+            "name"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "create_ticket",
+          "notify_channel"
+        ],
+        "task_count": 2
+      }
+    },
+    {
+      "id": "18_reserve_confirm",
+      "title": "Reserve then confirm",
+      "iota": "Reserve table T5 at 7pm then confirm reservation id r42.",
+      "gamma": {},
+      "tools_registry": {
+        "reserve_table": {
+          "description": "Tool reserve_table",
+          "params": [
+            "table",
+            "time"
+          ]
+        },
+        "confirm_reservation": {
+          "description": "Tool confirm_reservation",
+          "params": [
+            "res_id"
+          ]
+        }
+      },
+      "expected": {
+        "ordered_tool_names": [
+          "reserve_table",
+          "confirm_reservation"
+        ],
+        "task_count": 2
+      }
+    }
+  ]
+}

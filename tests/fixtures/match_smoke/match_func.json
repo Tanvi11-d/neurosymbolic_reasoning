@@ -1,0 +1,20 @@
+{
+  "id": "smoke_match_func",
+  "description": "Symbolic match_func_returns selects add when tool_name is empty.",
+  "task": {
+    "id": "t1",
+    "text": "Sum",
+    "depends_on": [],
+    "tool_name": "",
+    "parameters": {}
+  },
+  "scratchpad": { "a": 4, "b": 5 },
+  "turn_context": {},
+  "tools": ["add", "mul"],
+  "match_func_returns": "add",
+  "expected": {
+    "status": "success",
+    "function": "add",
+    "result": 9
+  }
+}

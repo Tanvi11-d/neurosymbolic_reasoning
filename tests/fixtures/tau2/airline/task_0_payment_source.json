@@ -1,0 +1,26 @@
+{
+  "id": "tau2_airline_task_0_payment_source",
+  "description": "Task 0 — books JFK→SEA for mia_li_3668. The failing real trajectory bound payment_methods to user-invented certificate IDs (CERT67890 / CERT12345) instead of the real IDs from the user profile (certificate_7504069, credit_card_4421486). Policy: 'All payment methods must already be in user profile for safety reasons.' The source-tracked binding rule: payment params must not come from user_msg; they must come from tool_result (get_user_details).",
+  "user_instruction": "Your user id is mia_li_3668. You want to fly from New York to Seattle on May 20 (one way). You want to fly in economy. 3 baggages. No insurance. You want to use your two certificates to pay. If only one certificate can be used, prefer the larger one, and pay the rest with your 7447 card.",
+  "policy_relevant_clauses": [
+    "All payment methods must already be in user profile for safety reasons.",
+    "Each reservation can use at most one travel certificate, at most one credit card, and at most three gift cards."
+  ],
+  "user_profile_from_tool": {
+    "user_id": "mia_li_3668",
+    "name": {"first_name": "Mia", "last_name": "Li"},
+    "dob": "1990-04-05",
+    "membership": "gold",
+    "payment_methods": {
+      "credit_card_4421486": {"source": "credit_card", "brand": "visa", "last_four": "7447", "id": "credit_card_4421486"},
+      "certificate_4856383": {"source": "certificate", "amount": 100, "id": "certificate_4856383"},
+      "certificate_7504069": {"source": "certificate", "amount": 250, "id": "certificate_7504069"},
+      "credit_card_1955700": {"source": "credit_card", "brand": "visa", "last_four": "1907", "id": "credit_card_1955700"}
+    }
+  },
+  "expected_payment_methods": [
+    {"payment_id": "certificate_7504069", "amount": 250},
+    {"payment_id": "credit_card_4421486", "amount": 5}
+  ],
+  "user_asserted_fake_ids": ["CERT67890", "CERT12345"]
+}

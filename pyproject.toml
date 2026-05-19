@@ -1,0 +1,105 @@
+[project]
+name = "nre"
+version = "0.1.0"
+description = "Neurosymbolic Reasoning Engin"
+readme = "README.md"
+license = {text = "GPL-3.0"}
+authors = [
+    { name = "CoreThink AI Inc", email = "vish@corethink.ai" },
+    { name = "Jay Vaghasiya", email = "jay@corethink.ai" },
+    { name = "Hobson Lane", email = "hobson@corethink.ai" },
+    ]
+requires-python = ">=3.11"
+dependencies = [
+    "joblib",
+    "duckdb>=1.5.1",
+    "editdistance>=0.8.1",
+    # IPython 9.x requires Python >=3.12; keep 8.x for 3.11 environments
+    "ipython>=8.26.0,<9",
+    "jsonlines",
+    "molid>=0.8.4",
+    "pandas",
+    "pip>=26.0.1",
+    "pubchempy>=1.0.5",
+    "pyxdameraulevenshtein>=1.10.0",
+    "rdkit",
+    "requests",
+    "scikit-learn>=1.8.0",
+    "spacy>=3.8.11",
+    "sqlalchemy[asyncio,postgresql-psycopg2binary]>=2.0.48",
+]
+
+[project.scripts]
+nre-verify-decompose = "nre.cli.verify_decompose:main"
+nre-verify-order = "nre.cli.verify_order:main"
+nre-verify-check = "nre.cli.verify_check:main"
+nre-verify-match = "nre.cli.verify_match:main"
+nre-serve = "nre.server.cli:main"
+
+[project.optional-dependencies]
+all = [
+    "biochem[ord,dev,ai,graphics,sql,apps]",
+]
+ord = [
+    "fastapi>=0.115.6",
+    "uvicorn[standard]>=0.32.1",
+    "duckdb>=1.1.3",
+    "pydantic-settings>=2.7.0",
+    "httpx>=0.28.1",
+    "requests>=2.32.3",
+    ]
+ai = [
+    "openrouter",
+    "google-api-core",
+    "google-cloud-storage",
+    "google-generativeai",
+    "google_cloud_aiplatform",
+    "langchain-community",
+    "langchain_google_genai",
+    "langchain",
+    "iso8601",
+]
+graphics = [
+    "keplergl",
+    "pydeck",
+]
+dev = [
+    "watchfiles",
+    "jupyterlab",
+    "pytest>=8.3.4",
+    "pytest-asyncio>=0.24.0",
+    "openai>=1.40.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.7.0",
+]
+sql = [
+    "psycopg2-binary",
+    "sqlalchemy",
+]
+apps = [
+    "gradio",
+    "streamlit-folium",
+    "plotly",
+#     "voila",
+#    "solara",
+]
+llm = [
+    "openai>=1.40.0",
+    "httpx>=0.27.0",
+    "pydantic>=2.7.0",
+    "pyyaml>=6.0",
+]
+server = [
+    "fastapi>=0.115.6",
+    "uvicorn[standard]>=0.32.1",
+    "pydantic>=2.7.0",
+    "pyyaml>=6.0",
+]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+
+[build-system]
+requires = ["uv_build>=0.9.24,<0.10.0"]
+build-backend = "uv_build"

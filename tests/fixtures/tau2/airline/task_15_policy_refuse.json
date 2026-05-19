@@ -1,0 +1,21 @@
+{
+  "id": "tau2_airline_task_15_policy_refuse",
+  "description": "Task 15 — user asks to REMOVE a passenger from a reservation. Policy: 'The user can modify passengers but cannot modify the number of passengers.' Ground truth is empty (refuse). Agent wrongly called cancel_reservation. PolicyConstraints should gate update_reservation_passengers when len(new_passengers) != len(current_passengers).",
+  "user_instruction": "Your user id is james_patel_9828 and want to remove passenger Sophia from your upcoming flights from LAS to DEN on May 19 and DEN to LAS on May 20, with reservation ID GV1N64.",
+  "policy_relevant_clauses": [
+    "Change passengers: The user can modify passengers but cannot modify the number of passengers.",
+    "The agent should deny user requests that are against this policy."
+  ],
+  "reservation_from_tool": {
+    "reservation_id": "GV1N64",
+    "passengers": [
+      {"first_name": "James", "last_name": "Patel", "dob": "1970-06-15"},
+      {"first_name": "Sophia", "last_name": "Patel", "dob": "2008-03-22"}
+    ]
+  },
+  "proposed_new_passengers": [
+    {"first_name": "James", "last_name": "Patel", "dob": "1970-06-15"}
+  ],
+  "expected_decision": "refuse",
+  "violation_reason": "passenger_count_change_forbidden"
+}

@@ -1,0 +1,6 @@
+.pytest_cache/
+__pycache__/
+.venv/
+z_run.txt
+config.bat
+node_modules

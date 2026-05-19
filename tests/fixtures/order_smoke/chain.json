@@ -1,0 +1,24 @@
+{
+  "description": "Linear chain — only one sibling batch of size 1 (no LLM sibling call).",
+  "conversation_summary": "",
+  "tasks": [
+    {
+      "id": "t1",
+      "text": "Enter workspace",
+      "depends_on": [],
+      "tool_name": "cd"
+    },
+    {
+      "id": "t2",
+      "text": "Make archive",
+      "depends_on": ["t1"],
+      "tool_name": "mkdir"
+    },
+    {
+      "id": "t3",
+      "text": "Move report",
+      "depends_on": ["t2"],
+      "tool_name": "mv"
+    }
+  ]
+}

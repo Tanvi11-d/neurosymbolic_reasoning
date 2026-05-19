@@ -1,0 +1,15 @@
+{
+  "id": "tau2_airline_basic_economy_modify",
+  "description": "Policy: 'Basic economy flights cannot be modified.' PolicyConstraints must refuse update_reservation_flights when the reservation.cabin=='basic_economy'.",
+  "user_instruction": "I want to change the dates on my basic economy reservation.",
+  "policy_relevant_clauses": [
+    "Basic economy flights cannot be modified."
+  ],
+  "reservation_from_tool": {
+    "reservation_id": "XYZ999",
+    "cabin": "basic_economy",
+    "flights": [{"flight_number": "HAT001", "date": "2024-05-20"}]
+  },
+  "expected_decision": "refuse",
+  "violation_reason": "basic_economy_immutable"
+}

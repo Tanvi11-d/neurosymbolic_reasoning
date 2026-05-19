@@ -1,0 +1,18 @@
+{
+  "description": "Two independent tasks — GET-ORDER LLM can rank siblings.",
+  "conversation_summary": "User wants to list the directory before creating a file (prefer ls before touch if both are ready).",
+  "tasks": [
+    {
+      "id": "t_touch",
+      "text": "Create empty marker file done.flag in workspace",
+      "depends_on": [],
+      "tool_name": "touch"
+    },
+    {
+      "id": "t_ls",
+      "text": "List files in workspace first",
+      "depends_on": [],
+      "tool_name": "ls"
+    }
+  ]
+}

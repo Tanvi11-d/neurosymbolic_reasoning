@@ -1,0 +1,18 @@
+{
+  "description": "Required scratchpad key missing — CHECK returns absent.",
+  "id": "smoke_absent",
+  "task": {
+    "id": "run",
+    "text": "Needs API key",
+    "depends_on": [],
+    "tool_name": "call_api"
+  },
+  "prereq_keys": ["api_key"],
+  "scratchpad": {},
+  "mode": "non_null",
+  "check_trace": false,
+  "expected": {
+    "status": "absent",
+    "key": "api_key"
+  }
+}

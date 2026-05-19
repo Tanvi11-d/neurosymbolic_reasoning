@@ -1,0 +1,21 @@
+{
+  "id": "smoke_tau",
+  "description": "Turn context τ overrides scratchpad for the same parameter name (LOOKUP order).",
+  "task": {
+    "id": "t1",
+    "text": "Add a and b",
+    "depends_on": [],
+    "tool_name": "add",
+    "parameters": {}
+  },
+  "scratchpad": { "a": 99, "b": 2 },
+  "turn_context": { "a": 1 },
+  "tools": ["add"],
+  "match_func_returns": null,
+  "expected": {
+    "status": "success",
+    "function": "add",
+    "result": 3,
+    "bindings": { "a": 1, "b": 2 }
+  }
+}

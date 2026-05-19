@@ -1,0 +1,21 @@
+{
+  "id": "smoke_task_params",
+  "description": "Explicit task.parameters supply bindings before τ and S.",
+  "task": {
+    "id": "t1",
+    "text": "Multiply",
+    "depends_on": [],
+    "tool_name": "mul",
+    "parameters": { "a": 3, "b": 4 }
+  },
+  "scratchpad": { "a": 100, "b": 100 },
+  "turn_context": {},
+  "tools": ["mul"],
+  "match_func_returns": null,
+  "expected": {
+    "status": "success",
+    "function": "mul",
+    "result": 12,
+    "bindings": { "a": 3, "b": 4 }
+  }
+}

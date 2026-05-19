@@ -1,0 +1,20 @@
+{
+  "id": "smoke_scratchpad",
+  "description": "Bind parameter x from scratchpad; execute double(x).",
+  "task": {
+    "id": "t1",
+    "text": "Double the counter",
+    "depends_on": [],
+    "tool_name": "double",
+    "parameters": {}
+  },
+  "scratchpad": { "x": 21 },
+  "turn_context": {},
+  "tools": ["double"],
+  "match_func_returns": null,
+  "expected": {
+    "status": "success",
+    "function": "double",
+    "result": 42
+  }
+}

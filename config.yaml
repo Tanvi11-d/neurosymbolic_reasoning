@@ -1,0 +1,52 @@
+# NRE kernel default config (shipped with the repo; baked into the Docker image).
+# Override by creating ~/.config/nre/config.yaml or pointing $NRE_CONFIG at a file.
+# Discovery order: $NRE_CONFIG → ./config.yaml → ~/.config/nre/config.yaml
+
+llm:
+  model: z-ai/glm-4.7
+
+  # HTTP server: classify tool requests; only agentic / multi-step tool workflows
+  # run the neurosymbolic kernel. Everything else (and all no-tool chats) use Opus.
+  routing:
+    enabled: true
+    direct_model: anthropic/claude-opus-4.7
+    # Route classifier: structured JSON only (separate from kernel ``llm.model``).
+    classifier:
+      model: openai/gpt-oss-120b
+      openrouter:
+        provider_order:
+          - cerebras/fp16
+
+  openrouter:
+    # Pin a provider (see https://openrouter.ai/<model>/providers).
+    # Use an empty list [] for auto-routing.
+    provider_order:
+      - cerebras/fp16
+
+    # Disable chain-of-thought for reasoning models (GLM, DeepSeek R1, o-series).
+    # Remove this block to keep the provider's default reasoning behaviour.
+    reasoning:
+      enabled: true
+
+  # After the neurosymbolic kernel: model that emits OpenAI-style ``tool_calls``.
+  # Kernel primitives (DECOMPOSE, ORDER, CHECK, MATCH) keep using ``llm`` above.
+  tool_completion:
+    model: minimax/minimax-m2.7
+    openrouter:
+      provider_order:
+        - sambanova
+
+    # tool_completion.openrouter overrides (optional):
+    # temperature: 0.0
+    # max_tokens: 32768
+    # max_retries: 3
+    # timeout_seconds: 320.0
+    # base_url: https://openrouter.ai/api/v1
+
+  # Shared OpenRouter tuning (kernel + passthrough); applies unless overridden
+  # under tool_completion.openrouter:
+  # temperature: 0.0
+  # max_tokens: 120000
+  # max_retries: 3
+  # timeout_seconds: 320.0
+  # base_url: https://openrouter.ai/api/v1

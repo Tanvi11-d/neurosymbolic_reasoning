@@ -1,0 +1,20 @@
+{
+  "id": "smoke_bound",
+  "description": "Registry entry without execute → status bound (bindings only).",
+  "task": {
+    "id": "t1",
+    "text": "Spec-only tool",
+    "depends_on": [],
+    "tool_name": "spec_only",
+    "parameters": {}
+  },
+  "scratchpad": { "a": "ok" },
+  "turn_context": {},
+  "tools": ["spec_only"],
+  "match_func_returns": null,
+  "expected": {
+    "status": "bound",
+    "function": "spec_only",
+    "bindings": { "a": "ok" }
+  }
+}

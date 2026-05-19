@@ -1,0 +1,729 @@
+{
+  "version": 1,
+  "description": "GET-ORDER benchmark: expected_ordered = deterministic topo baseline; LLM may differ.",
+  "cases": [
+    {
+      "id": "01_chain_3",
+      "description": "Linear chain of three tools",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "a1",
+          "text": "Step one",
+          "depends_on": [],
+          "tool_name": "x"
+        },
+        {
+          "id": "a2",
+          "text": "Step two",
+          "depends_on": [
+            "a1"
+          ],
+          "tool_name": "y"
+        },
+        {
+          "id": "a3",
+          "text": "Step three",
+          "depends_on": [
+            "a2"
+          ],
+          "tool_name": "z"
+        }
+      ],
+      "expected_ordered": [
+        "a1",
+        "a2",
+        "a3"
+      ]
+    },
+    {
+      "id": "02_parallel_pair",
+      "description": "Two independent tasks; context prefers listing before touch",
+      "conversation_summary": "List directory contents before creating a marker file.",
+      "tasks": [
+        {
+          "id": "t_ls",
+          "text": "List workspace",
+          "depends_on": [],
+          "tool_name": "ls"
+        },
+        {
+          "id": "t_touch",
+          "text": "Create flag file",
+          "depends_on": [],
+          "tool_name": "touch"
+        }
+      ],
+      "expected_ordered": [
+        "t_ls",
+        "t_touch"
+      ]
+    },
+    {
+      "id": "03_parallel_pair_swap_hint",
+      "description": "Context prefers touch before ls",
+      "conversation_summary": "Create the lock file first, then list files to verify.",
+      "tasks": [
+        {
+          "id": "p1",
+          "text": "List files",
+          "depends_on": [],
+          "tool_name": "ls"
+        },
+        {
+          "id": "p2",
+          "text": "Create lock",
+          "depends_on": [],
+          "tool_name": "touch"
+        }
+      ],
+      "expected_ordered": [
+        "p1",
+        "p2"
+      ]
+    },
+    {
+      "id": "04_fan_out",
+      "description": "One root, two children",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "r1",
+          "text": "Root",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "c2",
+          "text": "Child B",
+          "depends_on": [
+            "r1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "c1",
+          "text": "Child A",
+          "depends_on": [
+            "r1"
+          ],
+          "tool_name": "c"
+        }
+      ],
+      "expected_ordered": [
+        "r1",
+        "c1",
+        "c2"
+      ]
+    },
+    {
+      "id": "05_parallel_three",
+      "description": "Three independent API calls",
+      "conversation_summary": "Refresh cache before fetching user then posting analytics.",
+      "tasks": [
+        {
+          "id": "z3",
+          "text": "Post analytics",
+          "depends_on": [],
+          "tool_name": "post"
+        },
+        {
+          "id": "z1",
+          "text": "Refresh cache",
+          "depends_on": [],
+          "tool_name": "refresh"
+        },
+        {
+          "id": "z2",
+          "text": "Fetch user",
+          "depends_on": [],
+          "tool_name": "get"
+        }
+      ],
+      "expected_ordered": [
+        "z1",
+        "z2",
+        "z3"
+      ]
+    },
+    {
+      "id": "06_chain_4",
+      "description": "Four-step pipeline",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "s1",
+          "text": "Connect",
+          "depends_on": [],
+          "tool_name": "conn"
+        },
+        {
+          "id": "s2",
+          "text": "Auth",
+          "depends_on": [
+            "s1"
+          ],
+          "tool_name": "auth"
+        },
+        {
+          "id": "s3",
+          "text": "Query",
+          "depends_on": [
+            "s2"
+          ],
+          "tool_name": "q"
+        },
+        {
+          "id": "s4",
+          "text": "Close",
+          "depends_on": [
+            "s3"
+          ],
+          "tool_name": "close"
+        }
+      ],
+      "expected_ordered": [
+        "s1",
+        "s2",
+        "s3",
+        "s4"
+      ]
+    },
+    {
+      "id": "07_diamond",
+      "description": "Diamond: join after fork",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "d1",
+          "text": "Start",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "d2",
+          "text": "Left",
+          "depends_on": [
+            "d1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "d3",
+          "text": "Right",
+          "depends_on": [
+            "d1"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "d4",
+          "text": "Join",
+          "depends_on": [
+            "d2",
+            "d3"
+          ],
+          "tool_name": "d"
+        }
+      ],
+      "expected_ordered": [
+        "d1",
+        "d2",
+        "d3",
+        "d4"
+      ]
+    },
+    {
+      "id": "08_two_waves_parallel_second",
+      "description": "Second wave has two parallel tasks",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "w1",
+          "text": "Setup",
+          "depends_on": [],
+          "tool_name": "setup"
+        },
+        {
+          "id": "w3",
+          "text": "Task B",
+          "depends_on": [
+            "w1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "w2",
+          "text": "Task A",
+          "depends_on": [
+            "w1"
+          ],
+          "tool_name": "a"
+        }
+      ],
+      "expected_ordered": [
+        "w1",
+        "w2",
+        "w3"
+      ]
+    },
+    {
+      "id": "09_wide_parallel_four",
+      "description": "Four roots",
+      "conversation_summary": "Encrypt, then compress, then upload, then notify \u2014 by urgency.",
+      "tasks": [
+        {
+          "id": "f2",
+          "text": "Compress",
+          "depends_on": [],
+          "tool_name": "zip"
+        },
+        {
+          "id": "f4",
+          "text": "Notify",
+          "depends_on": [],
+          "tool_name": "mail"
+        },
+        {
+          "id": "f1",
+          "text": "Encrypt",
+          "depends_on": [],
+          "tool_name": "enc"
+        },
+        {
+          "id": "f3",
+          "text": "Upload",
+          "depends_on": [],
+          "tool_name": "s3"
+        }
+      ],
+      "expected_ordered": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ]
+    },
+    {
+      "id": "10_chain_2",
+      "description": "Short chain",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "x1",
+          "text": "Open",
+          "depends_on": [],
+          "tool_name": "open"
+        },
+        {
+          "id": "x2",
+          "text": "Read",
+          "depends_on": [
+            "x1"
+          ],
+          "tool_name": "read"
+        }
+      ],
+      "expected_ordered": [
+        "x1",
+        "x2"
+      ]
+    },
+    {
+      "id": "11_merge_three_to_one",
+      "description": "Three parents to one sink",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "m1",
+          "text": "A",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "m2",
+          "text": "B",
+          "depends_on": [],
+          "tool_name": "b"
+        },
+        {
+          "id": "m3",
+          "text": "C",
+          "depends_on": [],
+          "tool_name": "c"
+        },
+        {
+          "id": "m4",
+          "text": "Merge",
+          "depends_on": [
+            "m1",
+            "m2",
+            "m3"
+          ],
+          "tool_name": "merge"
+        }
+      ],
+      "expected_ordered": [
+        "m1",
+        "m2",
+        "m3",
+        "m4"
+      ]
+    },
+    {
+      "id": "12_staggered",
+      "description": "Partial overlap deps",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "g1",
+          "text": "G1",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "g2",
+          "text": "G2",
+          "depends_on": [
+            "g1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "g3",
+          "text": "G3",
+          "depends_on": [
+            "g1"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "g4",
+          "text": "G4",
+          "depends_on": [
+            "g2",
+            "g3"
+          ],
+          "tool_name": "d"
+        }
+      ],
+      "expected_ordered": [
+        "g1",
+        "g2",
+        "g3",
+        "g4"
+      ]
+    },
+    {
+      "id": "13_parallel_with_summary",
+      "description": "NL prefers validate before submit",
+      "conversation_summary": "Always validate the form before submitting to the server.",
+      "tasks": [
+        {
+          "id": "sub",
+          "text": "Submit form",
+          "depends_on": [],
+          "tool_name": "submit"
+        },
+        {
+          "id": "val",
+          "text": "Validate form",
+          "depends_on": [],
+          "tool_name": "validate"
+        }
+      ],
+      "expected_ordered": [
+        "sub",
+        "val"
+      ]
+    },
+    {
+      "id": "14_three_chain_parallel_branch",
+      "description": "",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "h1",
+          "text": "H1",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "h2",
+          "text": "H2",
+          "depends_on": [
+            "h1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "h4",
+          "text": "H4",
+          "depends_on": [
+            "h3"
+          ],
+          "tool_name": "d"
+        },
+        {
+          "id": "h3",
+          "text": "H3",
+          "depends_on": [
+            "h2"
+          ],
+          "tool_name": "c"
+        }
+      ],
+      "expected_ordered": [
+        "h1",
+        "h2",
+        "h3",
+        "h4"
+      ]
+    },
+    {
+      "id": "15_dual_roots_join",
+      "description": "Two roots merging \u2014 add dummy deps as two chains into join",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "i1",
+          "text": "I1",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "i2",
+          "text": "I2",
+          "depends_on": [],
+          "tool_name": "b"
+        },
+        {
+          "id": "i3",
+          "text": "I3",
+          "depends_on": [
+            "i1"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "i4",
+          "text": "I4",
+          "depends_on": [
+            "i2"
+          ],
+          "tool_name": "d"
+        },
+        {
+          "id": "i5",
+          "text": "I5",
+          "depends_on": [
+            "i3",
+            "i4"
+          ],
+          "tool_name": "e"
+        }
+      ],
+      "expected_ordered": [
+        "i1",
+        "i2",
+        "i3",
+        "i4",
+        "i5"
+      ]
+    },
+    {
+      "id": "16_parallel_binary_names",
+      "description": "Binary-style ids",
+      "conversation_summary": "Run checksum before download.",
+      "tasks": [
+        {
+          "id": "b10",
+          "text": "Download",
+          "depends_on": [],
+          "tool_name": "get"
+        },
+        {
+          "id": "b01",
+          "text": "Checksum",
+          "depends_on": [],
+          "tool_name": "hash"
+        }
+      ],
+      "expected_ordered": [
+        "b01",
+        "b10"
+      ]
+    },
+    {
+      "id": "17_wave_three_children",
+      "description": "",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "v0",
+          "text": "V0",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "v2",
+          "text": "V2",
+          "depends_on": [
+            "v0"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "v1",
+          "text": "V1",
+          "depends_on": [
+            "v0"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "v3",
+          "text": "V3",
+          "depends_on": [
+            "v0"
+          ],
+          "tool_name": "d"
+        }
+      ],
+      "expected_ordered": [
+        "v0",
+        "v1",
+        "v2",
+        "v3"
+      ]
+    },
+    {
+      "id": "18_short_parallel",
+      "description": "",
+      "conversation_summary": "Backup then delete old files.",
+      "tasks": [
+        {
+          "id": "del",
+          "text": "Delete old",
+          "depends_on": [],
+          "tool_name": "rm"
+        },
+        {
+          "id": "bak",
+          "text": "Backup",
+          "depends_on": [],
+          "tool_name": "cp"
+        }
+      ],
+      "expected_ordered": [
+        "bak",
+        "del"
+      ]
+    },
+    {
+      "id": "19_linear_5",
+      "description": "Longer chain",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "n1",
+          "text": "N1",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "n2",
+          "text": "N2",
+          "depends_on": [
+            "n1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "n3",
+          "text": "N3",
+          "depends_on": [
+            "n2"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "n4",
+          "text": "N4",
+          "depends_on": [
+            "n3"
+          ],
+          "tool_name": "d"
+        },
+        {
+          "id": "n5",
+          "text": "N5",
+          "depends_on": [
+            "n4"
+          ],
+          "tool_name": "e"
+        }
+      ],
+      "expected_ordered": [
+        "n1",
+        "n2",
+        "n3",
+        "n4",
+        "n5"
+      ]
+    },
+    {
+      "id": "20_complex_fan",
+      "description": "Root, two parallel, one depends on both",
+      "conversation_summary": "",
+      "tasks": [
+        {
+          "id": "q1",
+          "text": "Q1",
+          "depends_on": [],
+          "tool_name": "a"
+        },
+        {
+          "id": "q2",
+          "text": "Q2",
+          "depends_on": [
+            "q1"
+          ],
+          "tool_name": "b"
+        },
+        {
+          "id": "q3",
+          "text": "Q3",
+          "depends_on": [
+            "q1"
+          ],
+          "tool_name": "c"
+        },
+        {
+          "id": "q4",
+          "text": "Q4",
+          "depends_on": [
+            "q2"
+          ],
+          "tool_name": "d"
+        },
+        {
+          "id": "q5",
+          "text": "Q5",
+          "depends_on": [
+            "q3",
+            "q4"
+          ],
+          "tool_name": "e"
+        }
+      ],
+      "expected_ordered": [
+        "q1",
+        "q2",
+        "q3",
+        "q4",
+        "q5"
+      ]
+    }
+  ]
+}

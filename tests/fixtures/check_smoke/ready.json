@@ -1,0 +1,20 @@
+{
+  "description": "Prerequisites satisfied — CHECK returns ready.",
+  "id": "smoke_ready",
+  "task": {
+    "id": "run",
+    "text": "Execute step",
+    "depends_on": [],
+    "tool_name": "exec"
+  },
+  "prereq_keys": ["token", "workspace"],
+  "scratchpad": {
+    "token": "ok",
+    "workspace": "/tmp/ws"
+  },
+  "mode": "non_null",
+  "check_trace": false,
+  "expected": {
+    "status": "ready"
+  }
+}

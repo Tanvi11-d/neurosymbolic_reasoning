@@ -1,0 +1,20 @@
+{
+  "id": "smoke_tool_name",
+  "description": "task.tool_name wins over match_func when both name valid tools.",
+  "task": {
+    "id": "t1",
+    "text": "Use double",
+    "depends_on": [],
+    "tool_name": "double",
+    "parameters": { "x": 5 }
+  },
+  "scratchpad": {},
+  "turn_context": {},
+  "tools": ["double", "other"],
+  "match_func_returns": "other",
+  "expected": {
+    "status": "success",
+    "function": "double",
+    "result": 10
+  }
+}

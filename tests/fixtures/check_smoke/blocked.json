@@ -1,0 +1,20 @@
+{
+  "description": "Key present but value fails predicate — CHECK returns blocked.",
+  "id": "smoke_blocked",
+  "task": {
+    "id": "run",
+    "text": "Run gated step",
+    "depends_on": [],
+    "tool_name": "step"
+  },
+  "prereq_keys": ["approval"],
+  "scratchpad": {
+    "approval": null
+  },
+  "mode": "non_null",
+  "check_trace": false,
+  "expected": {
+    "status": "blocked",
+    "key": "approval"
+  }
+}
